@@ -48,7 +48,7 @@ fi
 # step 1: build docker images for git HEAD
 IMAGE_FULLNAME="${DOCKER_NAMESPACE}/${IMAGE}:${TAG}"
 echo "Building $IMAGE_FULLNAME"
-docker build --pull --no-cache --force-rm -t "${IMAGE_FULLNAME}" "${IMAGE_VARIANT}"
+docker build --pull --no-cache --force-rm --build-arg TAG="${TAG}" --tag "${IMAGE_FULLNAME}" "${IMAGE_VARIANT}"
 
 # step 2: push the image to the registry
 if [ "${DRY_RUN}" = 'false' ]; then
