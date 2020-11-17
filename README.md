@@ -17,7 +17,7 @@ Based on Docker image `rust`, it provides the additional tools:
 [`rustfmt`]: https://github.com/rust-lang/rustfmt
 [`clippy`]: https://github.com/rust-lang/rust-clippy
 
-### `kisiodigital/rust-ci:proj-latest`
+### `kisiodigital/rust-ci:latest-proj`
 
 Based on Docker image `kisiodigital/rust-ci:latest`, it provides also the
 [Proj] library, allowing to compile a Rust project with [`proj`]'s crate.

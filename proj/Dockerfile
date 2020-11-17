@@ -1,4 +1,5 @@
-FROM kisiodigital/rust-ci:latest
+ARG TAG=latest
+FROM kisiodigital/rust-ci:${TAG}
 
 ARG PROJ_VERSION="7.1.0"
 ENV PROJ_DEB "proj_${PROJ_VERSION}_amd64.deb"
