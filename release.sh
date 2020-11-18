@@ -41,14 +41,17 @@ HAS_TAG=$(git tag --list --points-at HEAD)
 [ -z "${HAS_TAG}" ] && TAG='latest'
 [ -z "${TAG}" ] && Error "impossible to get a tag"
 
-if [[ "${IMAGE_VARIANT}" != "base" ]]; then
-    TAG="${TAG}-${IMAGE_VARIANT}"
-fi
 
 # step 1: build docker images for git HEAD
-IMAGE_FULLNAME="${DOCKER_NAMESPACE}/${IMAGE}:${TAG}"
+if [[ "${IMAGE_VARIANT}" == "base" ]]; then
+    IMAGE_FULLNAME="${DOCKER_NAMESPACE}/${IMAGE}:${TAG}"
+    BUILD_ARG=''
+else
+    IMAGE_FULLNAME="${DOCKER_NAMESPACE}/${IMAGE}:${TAG}-${IMAGE_VARIANT}"
+    BUILD_ARG="--build-arg TAG=${TAG}"
+fi
 echo "Building $IMAGE_FULLNAME"
-docker build --pull --no-cache --force-rm --build-arg TAG="${TAG}" --tag "${IMAGE_FULLNAME}" "${IMAGE_VARIANT}"
+docker build --pull --no-cache --force-rm ${BUILD_ARG} --tag "${IMAGE_FULLNAME}" "${IMAGE_VARIANT}"
 
 # step 2: push the image to the registry
 if [ "${DRY_RUN}" = 'false' ]; then
