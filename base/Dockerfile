@@ -1,4 +1,4 @@
-FROM rust:1.47-slim-buster
+FROM rust:1.48-slim-buster
 
 RUN rustup component add rustfmt clippy
 # 'libssl-dev' and 'pkg-config' are useful for compilation of Rust crate
