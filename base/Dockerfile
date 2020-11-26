@@ -1,5 +1,12 @@
 FROM rust:1.48-slim-buster
 
+# Generic building tools
+RUN apt update \
+	&& apt install --yes make \
+	&& apt autoremove --yes \
+	&& rm -rf /var/lib/apt/lists/*
+
+# For Rust
 ENV CARGO_TARGET_DIR=/tmp/cargo-target
 RUN rustup component add rustfmt clippy
 # 'libssl-dev' and 'pkg-config' are useful for compilation of Rust crate
