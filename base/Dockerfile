@@ -7,6 +7,7 @@ RUN apt update \
 	&& rm -rf /var/lib/apt/lists/*
 
 # For Rust
+ENV CARGO_HOME=/tmp/cargo
 ENV CARGO_TARGET_DIR=/tmp/cargo-target
 RUN rustup component add rustfmt clippy
 # 'libssl-dev' and 'pkg-config' are useful for compilation of Rust crate
