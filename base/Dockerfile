@@ -7,8 +7,6 @@ RUN apt update \
 	&& rm -rf /var/lib/apt/lists/*
 
 # For Rust
-ENV CARGO_HOME=/tmp/cargo
-ENV CARGO_TARGET_DIR=/tmp/cargo-target
 RUN rustup component add rustfmt clippy
 # 'libssl-dev' and 'pkg-config' are useful for compilation of Rust crate
 # 'openssl-sys' which is used by 'cargo-audit'. Once compiled and installed,
@@ -19,3 +17,5 @@ RUN apt update \
 	&& apt purge --yes libssl-dev pkg-config \
 	&& apt autoremove --yes \
 	&& rm -rf /var/lib/apt/lists/*
+ENV CARGO_HOME=/tmp/cargo
+ENV CARGO_TARGET_DIR=/tmp/cargo-target
