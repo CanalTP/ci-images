@@ -1,11 +1,11 @@
-# rust-ci
+# ci-images
 
-This repository contains helpful tools for the CI with CanalTP's Rust projects.
+This repository contains helpful Docker images for the CI with CanalTP's projects.
 
 ## Docker images
 
 A few Docker images are available containing most of the useful tools to build
-and verify Rust projects.
+and verify projects.
 
 ### `kisiodigital/rust-ci:latest`
 
@@ -17,7 +17,7 @@ Based on Docker image `rust`, it provides the additional tools:
 [`rustfmt`]: https://github.com/rust-lang/rustfmt
 [`clippy`]: https://github.com/rust-lang/rust-clippy
 
-### `kisiodigital/rust-ci:latest-proj`
+#### Variant `kisiodigital/rust-ci:latest-proj`
 
 Based on Docker image `kisiodigital/rust-ci:latest`, it provides also the
 [Proj] library, allowing to compile a Rust project with [`proj`]'s crate.
