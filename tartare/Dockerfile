@@ -13,6 +13,9 @@ RUN BUILD_DEPENDENCIES="apt-transport-https ca-certificates curl gnupg-agent sof
     && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
     && apt-get update \
     && apt-get -y install docker-ce-cli=${DOCKER_VERSION} \
+    # install docker-compose for functional tests
+    && curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
+    && chmod +x /usr/local/bin/docker-compose \
     && apt-get -y purge ${BUILD_DEPENDENCIES} \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
