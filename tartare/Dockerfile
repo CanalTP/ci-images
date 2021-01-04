@@ -23,7 +23,10 @@ RUN BUILD_DEPENDENCIES="apt-transport-https curl gnupg-agent software-properties
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
-
-ENV PIP_TARGET=/tmp/pip
-ENV PYTHONPATH=${PYTHONPATH}:/tmp/pip
-ENV PATH=${PATH}:/tmp/pip/bin
+# something during the black installation does not handle PIP_TARGET correctly, so we use a virtualenv
+# Note: the virtual env has wide persmissions since we don't know the user jenkins will use
+ENV VIRTUAL_ENV=/tmp/venv
+ENV PRE_COMMIT_HOME=/tmp/precommit
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+RUN chmod -R a+rw ${VIRTUAL_ENV}
