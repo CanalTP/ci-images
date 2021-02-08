@@ -30,3 +30,5 @@ ENV PRE_COMMIT_HOME=/tmp/precommit
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 RUN chmod -R a+rw ${VIRTUAL_ENV}
+# we want an up to date pip version (update this once in a while)
+RUN pip install --upgrade pip==21.0.1
