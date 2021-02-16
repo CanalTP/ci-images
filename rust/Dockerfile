@@ -1,4 +1,4 @@
-FROM rust:1.48-slim-buster
+FROM rust:1.50-slim-buster
 
 # Generic building tools
 RUN apt update \
