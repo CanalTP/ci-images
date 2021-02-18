@@ -22,7 +22,7 @@ RUN apt update \
     && ./configure --prefix=/usr \
     && make -j$(nproc) \
     && make install \
-    && rm -fr /proj-src \
+    && rm -fr /tmp/proj-src \
     && apt purge --yes ${BUILD_DEPENDENCIES} \
     && apt autoremove --yes \
     && rm -rf /var/lib/apt/lists/*
