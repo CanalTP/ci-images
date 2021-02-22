@@ -4,7 +4,7 @@ FROM kisiodigital/rust-ci:${TAG}
 ARG PROJ_VERSION="7.2.1"
 
 # For building `libproj' and the Rust's crate `proj-sys`, the following Debian packages are needed:
-ARG BUILD_DEPENDENCIES="libcurl4-gnutls-dev libsqlite3-dev libtiff5-dev cmake pkg-config sqlite3 wget"
+ARG BUILD_DEPENDENCIES="libcurl4-nss-dev libsqlite3-dev libtiff5-dev cmake pkg-config sqlite3 wget"
 
 # For running `proj`, the following Debian packages are needed:
 # - 'clang' provides 'llvm-config', 'libclang.so' and 'stddef.h' needed for compiling 'proj-sys'
