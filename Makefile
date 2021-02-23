@@ -6,6 +6,16 @@ $(error DRY_RUN must be 'true' or 'false')
 endif
 endif
 
+.PHONY: release_proj_artifacts
+release_proj_artifacts: ## Release docker image kisiodigital/proj-ci:7.2.1-stretch-artifacts
+	$(info > Build docker image kisiodigital/proj-ci:7.2.1-stretch-artifacts)
+	@./release.sh $(if $(findstring true,${DRY_RUN}), --dry-run) --tag 7.2.1-stretch-artifacts --stage builder proj
+
+.PHONY: release_proj
+release_proj: ## Release docker image kisiodigital/proj-ci:7.2.1-stretch
+	$(info > Build docker image kisiodigital/proj-ci:7.2.1-stretch-artifacts)
+	@./release.sh $(if $(findstring true,${DRY_RUN}), --dry-run) --tag 7.2.1-stretch proj
+
 .PHONY: release_rust
 release_rust: ## Release docker image kisiodigital/rust-ci:latest
 	$(info > Build docker image kisiodigital/rust-ci:latest)
