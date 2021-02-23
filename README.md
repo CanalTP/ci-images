@@ -35,13 +35,19 @@ This Docker image provides all the binaries and libraries of the project [proj].
 
 ### `kisiodigital/rust-ci:latest`
 
-Based on Docker image `rust`, it provides the additional tools:
+Based on Docker image Debian stretch, it provides the additional tools:
 
+- [`rustup`]: setup for a functional Rust ecosystem
 - [`rustfmt`]: auto-formatting of the Rust source code
 - [`clippy`]: static linting of the Rust source code
+- [`cargo-audit`]: cargo tool to report known CVE in the dependencies
+- [`docker`]: docker engine
 
+[`rustup`]: https://rustup.rs/
 [`rustfmt`]: https://github.com/rust-lang/rustfmt
 [`clippy`]: https://github.com/rust-lang/rust-clippy
+[`cargo-audit`]: https://github.com/RustSec/cargo-audit
+[`docker`]: https://www.docker.com/
 
 #### Variant `kisiodigital/rust-ci:latest-proj`
 
