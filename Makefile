@@ -13,7 +13,7 @@ release_proj_artifacts: ## Release docker image kisiodigital/proj-ci:7.2.1-stret
 
 .PHONY: release_proj
 release_proj: ## Release docker image kisiodigital/proj-ci:7.2.1-stretch
-	$(info > Build docker image kisiodigital/proj-ci:7.2.1-stretch-artifacts)
+	$(info > Build docker image kisiodigital/proj-ci:7.2.1-stretch)
 	@./release.sh $(if $(findstring true,${DRY_RUN}), --dry-run) --tag 7.2.1-stretch proj
 
 .PHONY: release_rust
