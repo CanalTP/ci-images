@@ -1,5 +1,6 @@
 ARG TAG=latest
-FROM kisiodigital/proj-ci:7.2.1-stretch-artifacts as proj-artifacts
+ARG PROJ_VERSION=7.2.1
+FROM kisiodigital/proj-ci:${PROJ_VERSION}-artifacts as proj-artifacts
 FROM kisiodigital/rust-ci:${TAG}
 
 # For running `proj`, the following Debian packages are needed:

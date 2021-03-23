@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 HELP="./release.sh <image> [<variant>]
-    -d | --dry-run    build but do not push docker images to the registry
-    -h | --help       display this help message
-    -t | --tag        specify the tag of the Docker image (default: 'latest' or 'latest-variant')
-    -s | --stage      specify an intermediate Docker stage to release (default: to latest stage)
+    -d | --dry-run         build but do not push docker images to the registry
+    -p | --proj-version    version of proj dependency
+    -h | --help            display this help message
+    -t | --tag             specify the tag of the Docker image (default: 'latest' or 'latest-variant')
+    -s | --stage           specify an intermediate Docker stage to release (default: to latest stage)
 
 This script builds and pushes a Docker image named \`<image>-ci:latest\` using \`./<image>/Dockerfile\`.
 
@@ -25,6 +26,8 @@ while [[ ${#} -gt 0 ]]; do
     '-s' | '--stage') shift 1 ;
         STAGE="${1}" ;;
     '-d' | '--dry-run') DRY_RUN='true' ;;
+    '-p' | '--proj-version') shift 1;
+    	PROJ_VERSION="${1}" ;;
     '-h' | '--help') echo "${HELP}" && exit 0 ;;
     *) if [[ "${1}" =~ ^- ]]; then
            Error "flag ${1} is unknown"
@@ -66,6 +69,9 @@ else
 fi
 if [[ ! -z "${STAGE}" ]]; then
     BUILD_ARG="${BUILD_ARG} --target ${STAGE}"
+fi
+if [[ ! -z "${PROJ_VERSION}" ]]; then
+    BUILD_ARG="${BUILD_ARG} --build-arg ${PROJ_VERSION}"
 fi
 echo "Building $IMAGE_FULLNAME"
 docker build --pull --no-cache --force-rm ${BUILD_ARG} --tag "${IMAGE_FULLNAME}" "${DOCKERFILE_PATH}"
