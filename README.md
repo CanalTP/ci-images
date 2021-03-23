@@ -29,7 +29,7 @@ RUN apt update \
 
 Do not forget to install the runtime dependencies on which the [proj] artifacts depend.
 
-### `kisiodigital/proj-ci:7.2.1
+### `kisiodigital/proj-ci:7.2.1`
 
 This Docker image provides all the binaries and libraries of the project [proj],
 based on a Debian stretch.

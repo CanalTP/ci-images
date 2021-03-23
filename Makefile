@@ -24,7 +24,7 @@ release_rust: ## Release docker image kisiodigital/rust-ci:latest
 
 .PHONY: release_rust_proj
 release_rust_proj: ## Release docker image kisiodigital/rust-ci:latest-proj${PROJ_VERSION}
-	$(info > Build docker image kisiodigital/rust-ci:latest-proj)
+	$(info > Build docker image kisiodigital/rust-ci:latest-proj${PROJ_VERSION})
 	@./release.sh $(if $(findstring true,${DRY_RUN}), --dry-run) --tag latest-proj${PROJ_VERSION} rust proj
 
 .PHONY: release_tartare

@@ -27,7 +27,7 @@ while [[ ${#} -gt 0 ]]; do
         STAGE="${1}" ;;
     '-d' | '--dry-run') DRY_RUN='true' ;;
     '-p' | '--proj-version') shift 1;
-    	PROJ_VERSION="${1}" ;;
+        PROJ_VERSION="${1}" ;;
     '-h' | '--help') echo "${HELP}" && exit 0 ;;
     *) if [[ "${1}" =~ ^- ]]; then
            Error "flag ${1} is unknown"
