@@ -1,10 +1,19 @@
-FROM rust:1.50-slim-buster
+FROM debian:stretch
 
 # Generic tools
 RUN apt update \
-    && apt install --yes make git \
+    && apt install --yes build-essential git \
     && apt autoremove --yes \
     && rm -rf /var/lib/apt/lists/*
+
+# install rustup
+RUN apt update \
+    && apt install --yes curl \
+    && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
+    && apt purge --yes curl \
+    && apt autoremove --yes \
+    && rm -rf /var/lib/apt/lists/*
+ENV PATH "/root/.cargo/bin:$PATH"
 
 # For Rust
 RUN rustup component add rustfmt clippy
@@ -22,13 +31,14 @@ RUN apt update \
 
 # we also install docker to be able to release the project on a docker registry
 ARG DOCKER_BUILD_DEPENDENCIES="apt-transport-https curl gnupg-agent software-properties-common"
-ARG DOCKER_VERSION="5:20.10.3~3-0~debian-buster"
+ARG DOCKER_VERSION="5:19.03.9~3-0~debian-stretch"
 RUN apt update \
     && apt install --yes ${DOCKER_BUILD_DEPENDENCIES} \
     && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add \
     && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
     && apt update \
     && apt -y install docker-ce-cli=${DOCKER_VERSION} \
+    && add-apt-repository --remove "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
     && apt -y purge ${DOCKER_BUILD_DEPENDENCIES} \
     && apt autoremove --yes \
     && rm -rf /var/lib/apt/lists/*git 
