@@ -49,7 +49,7 @@ If you want to release this image with the latest version of Rust, just trigger 
 To know which version of Rust is embedded in the image, do the following:
 
 ```sh
-docker run -rm kisiodigital/rust-ci:latest rustc --version
+docker run kisiodigital/rust-ci:latest rustc --version
 ```
 
 [`rustup`]: https://rustup.rs/

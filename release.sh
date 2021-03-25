@@ -22,7 +22,7 @@ DRY_RUN='false'
 while [[ ${#} -gt 0 ]]; do
     case "${1}" in
     '-t' | '--tag') shift 1;
-        IMAGE_TAG="${1}" ;;
+        TAG="${1}" ;;
     '-s' | '--stage') shift 1 ;
         STAGE="${1}" ;;
     '-d' | '--dry-run') DRY_RUN='true' ;;
@@ -54,26 +54,18 @@ fi
 
 # step 0: prepare docker image name with registry and tag
 # get the tag from git, only if not already specified (see '--tag' option)
-[ -z "${ARG_TAG}" ] && ARG_TAG=$(git describe --tags --abbrev=0 2> /dev/null)
-[ -z "${ARG_TAG}" ] && ARG_TAG=latest
+[ -z "${TAG}" ] && TAG=$(git describe --tags --abbrev=0 2> /dev/null)
+[ -z "${TAG}" ] && TAG=latest
 
 # step 1: build docker images for git HEAD
 if [[ -z "${IMAGE_VARIANT}" ]]; then
     DOCKERFILE_PATH="./${IMAGE}/"
-    if [[ -z "${IMAGE_TAG}" ]]; then
-        IMAGE_FULLNAME="${DOCKER_NAMESPACE}/${IMAGE}-ci:${ARG_TAG}"
-    else
-        IMAGE_FULLNAME="${DOCKER_NAMESPACE}/${IMAGE}-ci:${IMAGE_TAG}"
-    fi
+    IMAGE_FULLNAME="${DOCKER_NAMESPACE}/${IMAGE}-ci:${TAG}"
     BUILD_ARG=''
 else
     DOCKERFILE_PATH="./${IMAGE}/${IMAGE_VARIANT}"
-    if [[ -z "${IMAGE_TAG}" ]]; then
-        IMAGE_FULLNAME="${DOCKER_NAMESPACE}/${IMAGE}-ci:${ARG_TAG}-${IMAGE_VARIANT}"
-    else
-        IMAGE_FULLNAME="${DOCKER_NAMESPACE}/${IMAGE}-ci:${IMAGE_TAG}"
-    fi
-    BUILD_ARG="--build-arg TAG=${ARG_TAG}"
+    IMAGE_FULLNAME="${DOCKER_NAMESPACE}/${IMAGE}-ci:${TAG}-${IMAGE_VARIANT}"
+    BUILD_ARG="--build-arg TAG=${TAG}"
 fi
 if [[ ! -z "${STAGE}" ]]; then
     BUILD_ARG="${BUILD_ARG} --target ${STAGE}"
