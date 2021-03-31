@@ -45,6 +45,8 @@ Based on Docker image Debian stretch, it provides the additional tools:
 - [`docker`]: docker engine
 
 If you want to release this image with the latest version of Rust, just trigger the Jenkins job manually.
+It is also possible to pin a specific Rust version by providing `--default-toolchain` param to
+rustup-init script.
 
 To know which version of Rust is embedded in the image, do the following:
 
