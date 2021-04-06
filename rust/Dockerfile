@@ -15,7 +15,7 @@ ENV PATH=/usr/local/cargo/bin:${PATH}
 RUN apt update \
     && apt install --yes curl \
     && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path --profile minimal \
-    && chmod -R a+w ${RUSTUP_HOME} ${CARGO_HOME} \
+    && chmod -R a+wrX ${RUSTUP_HOME} ${CARGO_HOME} \
     && rustup --version \
     && cargo --version \
     && rustc --version \
@@ -25,7 +25,7 @@ RUN apt update \
 
 # Rust tools
 RUN rustup component add rustfmt clippy \
-    && chmod -R a+w ${RUSTUP_HOME} ${CARGO_HOME}
+    && chmod -R a+wrX ${RUSTUP_HOME} ${CARGO_HOME}
 
 # 'libssl-dev' and 'pkg-config' are useful for compilation of Rust crate
 # 'openssl-sys' which is used by 'cargo-audit'. Once compiled and installed,
@@ -34,7 +34,7 @@ ARG AUDIT_BUILD_DEPENDENCIES="libssl-dev pkg-config"
 RUN apt update \
     && apt install --yes libssl1.1 ca-certificates ${AUDIT_BUILD_DEPENDENCIES}\
     && cargo install cargo-audit \
-    && chmod -R a+w ${RUSTUP_HOME} ${CARGO_HOME} \
+    && chmod -R a+wrX ${RUSTUP_HOME} ${CARGO_HOME} \
     && apt -y purge ${AUDIT_BUILD_DEPENDENCIES} \
     && apt autoremove --yes \
     && rm -rf /var/lib/apt/lists/*
@@ -53,5 +53,5 @@ RUN apt update \
     && apt autoremove --yes \
     && rm -rf /var/lib/apt/lists/*
 
-ENV CARGO_HOME=/tmp/cargo
+# define target_dir to avoid leaking builds with different permissions on host (when mounting sources)
 ENV CARGO_TARGET_DIR=/tmp/cargo-target
