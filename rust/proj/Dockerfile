@@ -6,6 +6,6 @@ FROM kisiodigital/rust-ci:${TAG}
 ARG RUNTIME_DEPENDENCIES="clang libtiff5 libcurl3-nss libsqlite3-0"
 COPY --from=proj-artifacts /proj-artifacts /
 RUN apt update \
-    && apt install --yes ${RUNTIME_DEPENDENCIES} \
+    && apt install --yes curl ${RUNTIME_DEPENDENCIES} \
     && apt autoremove --yes \
     && rm -rf /var/lib/apt/lists/*

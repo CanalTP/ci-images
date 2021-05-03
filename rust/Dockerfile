@@ -40,10 +40,10 @@ RUN apt update \
     && rm -rf /var/lib/apt/lists/*
 
 # we also install docker to be able to release the project on a docker registry
-ARG DOCKER_BUILD_DEPENDENCIES="apt-transport-https curl gnupg-agent software-properties-common"
+ARG DOCKER_BUILD_DEPENDENCIES="apt-transport-https gnupg-agent software-properties-common"
 ARG DOCKER_VERSION="5:19.03.9~3-0~debian-stretch"
 RUN apt update \
-    && apt install --yes ${DOCKER_BUILD_DEPENDENCIES} \
+    && apt install --yes curl ${DOCKER_BUILD_DEPENDENCIES} \
     && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add \
     && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
     && apt update \
