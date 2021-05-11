@@ -58,7 +58,7 @@ rustup-init script.
 To know which version of Rust is embedded in the image, do the following:
 
 ```sh
-docker run -rm kisiodigital/rust-ci:latest rustc --version
+docker run --rm kisiodigital/rust-ci:latest rustc --version
 ```
 
 [`rustup`]: https://rustup.rs/
