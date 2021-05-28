@@ -20,7 +20,7 @@ FROM kisiodigital/proj-ci:7.2.1-artifacts as proj-artifacts
 FROM debian:stretch
 
 COPY --from=proj-artifacts /proj-artifacts /
-ENV RUNTIME_DEPENDENCIES="clang libtiff5 libcurl3-nss libsqlite3-0"
+ARG RUNTIME_DEPENDENCIES="clang libclang1-3.9 pkg-config libtiff5 libcurl3-nss libsqlite3-0"
 RUN apt update \
     && apt install --yes ${RUNTIME_DEPENDENCIES} \
     && apt autoremove --yes \
@@ -30,7 +30,8 @@ RUN apt update \
 Do not forget to install the runtime dependencies on which the [proj] artifacts depend.
 
 > For running `proj`, the following Debian packages are needed:
-> - 'clang' provides 'llvm-config', 'libclang.so' and 'stddef.h' needed for compiling 'proj-sys'
+> - 'clang' provides 'llvm-config', 'libclang.so' and 'stddef.h' needed for compiling 'proj-sys' (version 3.9 needed by proj-sys)
+> - 'pkg-config' needed by 'proj-sys' to find the installed version
 > - 'libtiff5' provides 'libtiff.so', needed for linking when 'proj-sys' is used
 > - 'libcurl3-nss' provides 'libcurl-nss.so', needed for linking when 'proj-sys' is used
 > - 'libsqlite3-0' is used by proj to manage different projections definitions (EPSG)
