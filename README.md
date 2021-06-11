@@ -12,15 +12,15 @@ and verify projects.
 This Docker image provides pre-built artifacts for [proj] library,
 based on a Debian stretch.
 
-In order to use it in a multistage Docker image, you can do the following setup.
+In order to use it in a multistage Docker image, you can do the following setup (make sure that clang is >=3.9).
 
-```
+```sh
 FROM kisiodigital/proj-ci:7.2.1-artifacts as proj-artifacts
 
 FROM debian:stretch
 
 COPY --from=proj-artifacts /proj-artifacts /
-ARG RUNTIME_DEPENDENCIES="clang libclang1-3.9 pkg-config libtiff5 libcurl3-nss libsqlite3-0"
+ARG RUNTIME_DEPENDENCIES="pkg-config libtiff5 libcurl3-nss libsqlite3-0 clang" # or clang-3.9
 RUN apt update \
     && apt install --yes ${RUNTIME_DEPENDENCIES} \
     && apt autoremove --yes \
@@ -30,7 +30,7 @@ RUN apt update \
 Do not forget to install the runtime dependencies on which the [proj] artifacts depend.
 
 > For running `proj`, the following Debian packages are needed:
-> - 'clang' provides 'llvm-config', 'libclang.so' and 'stddef.h' needed for compiling 'proj-sys' (version 3.9 needed by proj-sys)
+> - 'clang' provides 'llvm-config', 'libclang.so' and 'stddef.h' needed for compiling 'proj-sys' (clang >=3.9 needed by proj-sys)
 > - 'pkg-config' needed by 'proj-sys' to find the installed version
 > - 'libtiff5' provides 'libtiff.so', needed for linking when 'proj-sys' is used
 > - 'libcurl3-nss' provides 'libcurl-nss.so', needed for linking when 'proj-sys' is used

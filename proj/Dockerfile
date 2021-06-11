@@ -1,4 +1,4 @@
-ARG RUNTIME_DEPENDENCIES="clang libtiff5 libcurl3-nss libsqlite3-0"
+ARG RUNTIME_DEPENDENCIES="clang-3.9 libtiff5 libcurl3-nss libsqlite3-0"
 
 FROM debian:stretch as builder
 ARG RUNTIME_DEPENDENCIES
