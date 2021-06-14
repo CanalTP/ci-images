@@ -14,13 +14,13 @@ based on a Debian stretch.
 
 In order to use it in a multistage Docker image, you can do the following setup (make sure that clang is >=3.9).
 
-```sh
+```dockerfile
 FROM kisiodigital/proj-ci:7.2.1-artifacts as proj-artifacts
 
 FROM debian:stretch
 
 COPY --from=proj-artifacts /proj-artifacts /
-ARG RUNTIME_DEPENDENCIES="pkg-config libtiff5 libcurl3-nss libsqlite3-0 clang" # or clang-3.9
+ARG RUNTIME_DEPENDENCIES="clang-7 pkg-config libtiff5 libcurl3-nss libsqlite3-0"
 RUN apt update \
     && apt install --yes ${RUNTIME_DEPENDENCIES} \
     && apt autoremove --yes \
@@ -29,9 +29,10 @@ RUN apt update \
 
 Do not forget to install the runtime dependencies on which the [proj] artifacts depend.
 
-> For running `proj`, the following Debian packages are needed:
-> - 'clang' provides 'llvm-config', 'libclang.so' and 'stddef.h' needed for compiling 'proj-sys' (clang >=3.9 needed by proj-sys)
-> - 'pkg-config' needed by 'proj-sys' to find the installed version
+> For developing with or running `proj`, the following Debian packages are needed:
+>
+> - 'pkg-config' needed for compiling 'proj-sys' rust crate to find the installed version
+> - 'clang-7' provides 'llvm-config', 'libclang.so' and 'stddef.h' needed for compiling 'proj-sys' (clang >=3.9 needed by proj-sys)
 > - 'libtiff5' provides 'libtiff.so', needed for linking when 'proj-sys' is used
 > - 'libcurl3-nss' provides 'libcurl-nss.so', needed for linking when 'proj-sys' is used
 > - 'libsqlite3-0' is used by proj to manage different projections definitions (EPSG)
