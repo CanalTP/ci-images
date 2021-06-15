@@ -12,29 +12,50 @@ and verify projects.
 This Docker image provides pre-built artifacts for [proj] library,
 based on a Debian stretch.
 
-In order to use it in a multistage Docker image, you can do the following setup.
+Do not forget to install the runtime dependencies on which the [proj] artifacts depend.
 
-```
+> For developing or running `proj`, the following Debian packages are needed:
+>
+> - 'pkg-config' needed for compiling 'proj-sys' rust crate to find the installed version
+> - 'clang-7' provides 'llvm-config', 'libclang.so' and 'stddef.h' needed for compiling/using 'proj-sys' (clang >=3.9 needed by crate proj-sys)
+> - 'libtiff5' provides 'libtiff.so', needed for linking when 'proj-sys' is used
+> - 'libcurl3-nss' provides 'libcurl-nss.so', needed for linking when 'proj-sys' is used
+> - 'libsqlite3-0' is used by proj to manage different projections definitions (EPSG)
+> - 'proj' provides 'proj.h' and 'libproj.so', needed for compiling 'proj-sys' (installed manually below)
+
+In order to use it in a multistage Docker image, you may use one of the following setups.
+
+#### Rust development
+
+`proj` crate requires pkg-config and clang >=3.9.
+
+```dockerfile
 FROM kisiodigital/proj-ci:7.2.1-artifacts as proj-artifacts
 
 FROM debian:stretch
 
 COPY --from=proj-artifacts /proj-artifacts /
-ENV RUNTIME_DEPENDENCIES="clang libtiff5 libcurl3-nss libsqlite3-0"
+ARG PROJ_RUST_DEV_DEPENDENCIES="clang-7 pkg-config libtiff5 libcurl3-nss libsqlite3-0"
 RUN apt update \
-    && apt install --yes ${RUNTIME_DEPENDENCIES} \
+    && apt install --yes ${PROJ_RUST_DEV_DEPENDENCIES} \
     && apt autoremove --yes \
     && rm -rf /var/lib/apt/lists/*
 ```
 
-Do not forget to install the runtime dependencies on which the [proj] artifacts depend.
+#### Runtime
 
-> For running `proj`, the following Debian packages are needed:
-> - 'clang' provides 'llvm-config', 'libclang.so' and 'stddef.h' needed for compiling 'proj-sys'
-> - 'libtiff5' provides 'libtiff.so', needed for linking when 'proj-sys' is used
-> - 'libcurl3-nss' provides 'libcurl-nss.so', needed for linking when 'proj-sys' is used
-> - 'libsqlite3-0' is used by proj to manage different projections definitions (EPSG)
-> - 'proj' provides 'proj.h' and 'libproj.so', needed for compiling 'proj-sys' (installed manually below)
+```dockerfile
+FROM kisiodigital/proj-ci:7.2.1-artifacts as proj-artifacts
+
+FROM debian:stretch
+
+COPY --from=proj-artifacts /proj-artifacts /
+ARG PROJ_RUNTIME_DEPENDENCIES="clang-7 libtiff5 libcurl3-nss libsqlite3-0"
+RUN apt update \
+    && apt install --yes ${PROJ_RUNTIME_DEPENDENCIES} \
+    && apt autoremove --yes \
+    && rm -rf /var/lib/apt/lists/*
+```
 
 ### `kisiodigital/proj-ci:7.2.1`
 
