@@ -13,7 +13,7 @@ pipeline {
                 stage('rust') {
                     steps {
                         script {
-                            docker.withRegistry('', 'kisiodigital-user-dockerhub') {
+                            docker.withRegistry('', 'dockerhub-user') {
                                 sh "make release_proj_artifacts"
                                 sh "make release_proj"
                                 sh "make release_rust"
@@ -25,7 +25,7 @@ pipeline {
                 stage('tartare') {
                     steps {
                         script {
-                            docker.withRegistry('', 'kisiodigital-user-dockerhub') {
+                            docker.withRegistry('', 'dockerhub-user') {
                                 sh "make release_tartare"
                             }
                         }
