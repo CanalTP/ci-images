@@ -33,7 +33,7 @@ RUN rustup component add rustfmt clippy \
 ARG AUDIT_BUILD_DEPENDENCIES="libssl-dev pkg-config"
 RUN apt update \
     && apt install --yes libssl1.1 ca-certificates ${AUDIT_BUILD_DEPENDENCIES}\
-    && cargo install cargo-audit \
+    && cargo install cargo-audit cargo-edit \
     && chmod -R a+wrX ${RUSTUP_HOME} ${CARGO_HOME} \
     && apt -y purge ${AUDIT_BUILD_DEPENDENCIES} \
     && apt autoremove --yes \
