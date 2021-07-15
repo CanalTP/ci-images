@@ -70,6 +70,7 @@ Based on Docker image Debian stretch, it provides the additional tools:
 - [`rustfmt`]: auto-formatting of the Rust source code
 - [`clippy`]: static linting of the Rust source code
 - [`cargo-audit`]: cargo tool to report known CVE in the dependencies
+- [`cargo-edit`]: cargo tool to manage dependencies by modifying Cargo.toml
 - [`docker`]: docker engine
 
 If you want to release this image with the latest version of Rust, just trigger the Jenkins job manually.
@@ -86,6 +87,7 @@ docker run --rm kisiodigital/rust-ci:latest rustc --version
 [`rustfmt`]: https://github.com/rust-lang/rustfmt
 [`clippy`]: https://github.com/rust-lang/rust-clippy
 [`cargo-audit`]: https://github.com/RustSec/cargo-audit
+[`cargo-edit`]: https://github.com/killercup/cargo-edit
 [`docker`]: https://www.docker.com/
 
 #### Variant `kisiodigital/rust-ci:latest-proj7.2.1`
